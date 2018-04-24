@@ -90,7 +90,7 @@ def main():
                     elif 'contact' in current_update['message']:
                         first_name = current_update['message']['contact']['first_name']
                         if 'user_id' not in current_update['message']['contact']:
-                            wisdom_bot.send_message(first_chat_id, "Sorry,{}doesn't have a telegram account.".format(first_name))
+                            wisdom_bot.send_message(first_chat_id, "Sorry, {} doesn't have a telegram agccount.".format(first_name))
                             new_offset = first_update_id + 1
                             break
                         new_user_id = (current_update['message']['contact']['user_id'])
