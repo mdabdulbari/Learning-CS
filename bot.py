@@ -56,10 +56,11 @@ def main():
         
         # If condition twice to optimize.
         if message_sent == False:
-            time = str(datetime.now())[11:16]
-            if  time > '09:00':
+            time = str(datetime.now())[11:19]
+            if '09:00:00' > time > '9:00:30':
                 # Sending to the group 'geeks'
-                wisdom_bot.send_message(592779906, "It worked")
+                # Setup multiple group handling, through database - pending.
+                wisdom_bot.send_message(592779906, "Today's tip")
                 message_sent = True
 
         if len(all_updates) > 0:
@@ -89,12 +90,12 @@ def main():
                     elif 'contact' in current_update['message']:
                         first_name = current_update['message']['contact']['first_name']
                         if 'user_id' not in current_update['message']['contact']:
-                            wisdom_bot.send_message(first_chat_id, "Sorry, " + first_name + " doesn't have a telegram account")
+                            wisdom_bot.send_message(first_chat_id, "Sorry,{}doesn't have a telegram account.".format(first_name))
                             new_offset = first_update_id + 1
                             break
                         new_user_id = (current_update['message']['contact']['user_id'])
                         if new_user_id in known_users:
-                            wisdom_bot.send_message(first_chat_id, first_name + ' is already recognised')
+                            wisdom_bot.send_message(first_chat_id, 'I already know {}'.format(first_name))
                             new_offset = first_update_id + 1
                         else:
                             known_users.append(new_user_id)
@@ -103,7 +104,15 @@ def main():
                             wisdom_bot.send_message(first_chat_id, first_name + ' can now message me!')
                             new_offset = first_update_id + 1
                     else:
-                        wisdom_bot.send_message(first_chat_id, 'Silver noob '+first_chat_name)
+                        wisdom_bot.send_message(first_chat_id,"""
+                            Here are the things you can do:
+
+Share a contact with me: They can start texting me!!
+(please use your mobile app to share a contact)
+
+Thats all I can do.
+I am still learning. Stay tuned!!
+                        """)
                         new_offset = first_update_id + 1
                 else:
                     print(first_chat_id)
