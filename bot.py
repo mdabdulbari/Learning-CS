@@ -48,20 +48,16 @@ def main():
     for row in database.execute("SELECT User_id FROM Users"):
         known_users.append(row[0])
     new_offset = 0
-    message_sent = False
 
     while True:
         
         all_updates=wisdom_bot.get_updates(new_offset)
-        
-        # If condition twice to optimize.
-        if message_sent == False:
-            time = str(datetime.now())[11:19]
-            if '09:00:00' > time > '9:00:30':
-                # Sending to the group 'geeks'
-                # Setup multiple group handling, through database - pending.
-                wisdom_bot.send_message(592779906, "Today's tip")
-                message_sent = True
+        time = str(datetime.now())[11:19]
+        if '09:00:00' > time > '9:00:30':
+            # Sending to the group 'geeks'
+            # Setup multiple group handling, through database - pending.
+            wisdom_bot.send_message(592779906, "Today's tip")
+            message_sent = True
 
         if len(all_updates) > 0:
             for current_update in all_updates:
