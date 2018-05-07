@@ -57,7 +57,9 @@ def main():
         
         all_updates=wisdom_bot.get_updates(new_offset)
         time = str(datetime.now())[11:19]
-        if '09:00:00' < '09:00:30':
+        print(1)
+        if '09:00:00' < time:
+            print(2)
             # Sending to the group 'geeks'
             # Setup multiple group handling, through database - pending.
             repo.pull()
@@ -78,6 +80,9 @@ def main():
                 count_file.write(str(int(count) + 1))
                 current_file.close()
                 count_file.close()
+                repo.add(u=True)
+                repo.commit('-m "Update current_tip"')
+                repo.push()
             
         if len(all_updates) > 0:
             for current_update in all_updates:
