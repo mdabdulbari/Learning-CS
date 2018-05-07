@@ -3,6 +3,9 @@ import datetime
 import requests
 from datetime import datetime
 import sqlite3
+import git
+
+repo = git.cmd.Git(".")
 
 class BotHandler:
     def __init__(self, token):
@@ -56,9 +59,9 @@ def main():
         if '09:00:00' > time > '9:00:30':
             # Sending to the group 'geeks'
             # Setup multiple group handling, through database - pending.
+            repo.pull()
             wisdom_bot.send_message(592779906, "Today's tip")
-            message_sent = True
-
+            
         if len(all_updates) > 0:
             for current_update in all_updates:
                 first_update_id = current_update['update_id']
