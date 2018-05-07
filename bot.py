@@ -57,9 +57,7 @@ def main():
         
         all_updates=wisdom_bot.get_updates(new_offset)
         time = str(datetime.now())[11:19]
-        print(1)
         if '09:00:00' < time < '09:01:00':
-            print(2)
             # Sending to the group 'geeks'
             # Setup multiple group handling, through database - pending.
             repo.pull()
