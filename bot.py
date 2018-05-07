@@ -4,6 +4,7 @@ import requests
 from datetime import datetime
 import sqlite3
 import git
+import os
 
 repo = git.cmd.Git(".")
 
@@ -56,11 +57,27 @@ def main():
         
         all_updates=wisdom_bot.get_updates(new_offset)
         time = str(datetime.now())[11:19]
-        if '09:00:00' > time > '9:00:30':
+        if '09:00:00' < time:
             # Sending to the group 'geeks'
             # Setup multiple group handling, through database - pending.
             repo.pull()
-            wisdom_bot.send_message(592779906, "Today's tip")
+            files = os.listdir('.')
+            count = ""
+            count_file = open("current_tip.txt", "r+")
+            for element in count_file:
+                count = count + element
+
+            current_tip = "tip" + str(count)
+            if current_tip in files:
+                message = ""
+                current_file = open(current_tip)
+                for char in current_file:
+                    message = message + char
+                wisdom_bot.send_message(-266323148, message)
+                count_file.seek(0, 0)
+                count_file.write(str(int(count) + 1))
+                current_file.close()
+                count_file.close()
             
         if len(all_updates) > 0:
             for current_update in all_updates:
@@ -114,7 +131,6 @@ I am still learning. Stay tuned!!
                         """)
                         new_offset = first_update_id + 1
                 else:
-                    print(first_chat_id)
                     wisdom_bot.send_message(first_chat_id, "Sorry, I don't know who you are.")
                     new_offset = first_update_id + 1
 
