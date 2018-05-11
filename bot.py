@@ -41,7 +41,6 @@ class BotHandler:
 token = '586420533:AAEXkkXGBIJb-YjiWXJe9p1WSwVpDAtRACw'
 wisdom_bot = BotHandler(token) #Your bot's name
 
-
 def main():
     #Establish database connection.
     connection = sqlite3.connect('userIds.db')
@@ -122,6 +121,10 @@ def main():
                             connection.commit()
                             wisdom_bot.send_message(first_chat_id, first_name + ' can now message me!')
                             new_offset = first_update_id + 1
+                            repo.add(u=True)
+                            repo.commit('-m "Add new user"')
+                            repo.push()
+                            
                     else:
                         wisdom_bot.send_message(first_chat_id,"""
                             Here are the things you can do:
