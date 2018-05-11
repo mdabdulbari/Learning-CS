@@ -14,7 +14,7 @@ class BotHandler:
             self.api_url = "https://api.telegram.org/bot{}/".format(token)
 
 
-    def get_updates(self, offset=0, timeout=30):
+    def get_updates(self, offset=0, timeout=60):
         method = 'getUpdates'
         params = {'timeout': timeout, 'offset': offset}
         resp = requests.get(self.api_url + method, params)
@@ -57,7 +57,6 @@ def main():
         all_updates=wisdom_bot.get_updates(new_offset)
         time = str(datetime.now())[11:19]
         if '09:00:00' < time:
-            print(1)
             # Sending to the group 'geeks'
             # Setup multiple group handling, through database - pending.
             repo.pull()
@@ -66,8 +65,7 @@ def main():
             count_file = open("current_tip.txt", "r+")
             for element in count_file:
                 count = count + element
-
-            current_tip = "tip" + str(count)
+            current_tip = str("tip" + str(count))
             if current_tip in files:
                 message = ""
                 current_file = open(current_tip)
