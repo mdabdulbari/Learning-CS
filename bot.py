@@ -6,7 +6,7 @@ import sqlite3
 import git
 import os
 
-repo = git.cmd.Git(".")
+repo = git.cmd.Git("~/wisdombot/WisdomBOT/")
 
 class BotHandler:
     def __init__(self, token):
@@ -76,7 +76,7 @@ def main():
                 count_file.write(str(int(count) + 1))
                 current_file.close()
                 count_file.close()
-                repo.add(u=True)
+                repo.add('.')
                 repo.commit('-m "Update current_tip"')
                 repo.push()
             
