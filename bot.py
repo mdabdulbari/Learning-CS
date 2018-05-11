@@ -102,7 +102,7 @@ def main():
                 # Check if user is recognised.
                 if(first_chat_id in known_users):
                     if first_chat_text == 'Hi':
-                        wisdom_bot.send_message(first_chat_id, 'Updated Hello ' + first_chat_name)
+                        wisdom_bot.send_message(first_chat_id, 'Hello ' + first_chat_name)
                         new_offset = first_update_id + 1
                     
                     # Add a new contact to be recognised by the bot.
