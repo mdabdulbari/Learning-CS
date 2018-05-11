@@ -57,6 +57,7 @@ def main():
         all_updates=wisdom_bot.get_updates(new_offset)
         time = str(datetime.now())[11:19]
         if '09:00:00' < time:
+            print(1)
             # Sending to the group 'geeks'
             # Setup multiple group handling, through database - pending.
             repo.pull()
@@ -101,7 +102,7 @@ def main():
                 # Check if user is recognised.
                 if(first_chat_id in known_users):
                     if first_chat_text == 'Hi':
-                        wisdom_bot.send_message(first_chat_id, 'Hello ' + first_chat_name)
+                        wisdom_bot.send_message(first_chat_id, 'Updated Hello ' + first_chat_name)
                         new_offset = first_update_id + 1
                     
                     # Add a new contact to be recognised by the bot.
