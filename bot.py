@@ -6,7 +6,8 @@ import sqlite3
 import git
 import os
 
-repo = git.cmd.Git("~/wisdombot/WisdomBOT/")
+#repo = git.cmd.Git("~/wisdombot/WisdomBOT/")
+repo = git.cmd.Git(".")
 
 class BotHandler:
     def __init__(self, token):
@@ -14,7 +15,7 @@ class BotHandler:
             self.api_url = "https://api.telegram.org/bot{}/".format(token)
 
 
-    def get_updates(self, offset=0, timeout=60):
+    def get_updates(self, offset=0, timeout=30):
         method = 'getUpdates'
         params = {'timeout': timeout, 'offset': offset}
         resp = requests.get(self.api_url + method, params)
@@ -99,10 +100,17 @@ def main():
 
                 # Check if user is recognised.
                 if(first_chat_id in known_users):
-                    if first_chat_text == 'Hi':
+                    if first_chat_text == 'Hi' or first_chat_text == "hi" or first_chat_text == "hello" or first_chat_text == "Hello":
                         wisdom_bot.send_message(first_chat_id, 'Hello ' + first_chat_name)
                         new_offset = first_update_id + 1
                     
+                    elif first_chat_text == "list" or first_chat_id == "List":
+                        database.execute("INSERT INTO Users (User_id, NAME) VALUES ({}, '{}')".format(new_user_id, first_name))
+
+                    elif first_chat_text[:2] == "add" or first_chat_id[:2] == "Add":
+                        database.execute("INSERT INTO Users (user_id, list_item) VALUES ({}, '{}')".format(first_chat_id, first_chat_text[3:]))
+                        connection.commit()
+
                     # Add a new contact to be recognised by the bot.
                     elif 'contact' in current_update['message']:
                         first_name = current_update['message']['contact']['first_name']
